@@ -64,20 +64,17 @@ public class AirShip {
         camera.position.set(sprite.getWidth() / 2, sprite.getHeight() / 2, 0);
         camera.update();
 
-        posX = 0;
-        posY = 0;
+        posX = cenX;
+        posY = cenY;
         angle = 90;
         cannon1 = new float[2];
-        /*cannon1[0] = (float)(cenX + 45*Math.cos(Math.toRadians(33)));
-        cannon1[1] = (float)(cenY + 45*Math.sin(Math.toRadians(33)));
         cannon2 = new float[2];
-        cannon2[0] =cannon1[0]-cenX;
-        cannon2[1] =cannon1[1];*/
-        cannon1[0]=cenX+31;
+        angleSet();
+        /*cannon1[0]=cenX+31;
         cannon1[1]=cenY+26;
         cannon2 = new float[2];
         cannon2[0]=cenX-31;
-        cannon2[1]=cenY+26;
+        cannon2[1]=cenY+26;*/
 
         sprite.setPosition(0,0);
     }
@@ -88,6 +85,13 @@ public class AirShip {
         move();
         camera.position.set(posX,posY,0);
         camera.update();
+    }
+
+    public void angleSet(){
+        cannon1[0] = (float)(posX + 40.45d*Math.cos(Math.toRadians(angle-45)));
+        cannon1[1] = (float)(posY + 40.45d*Math.sin(Math.toRadians(angle-45)));
+        cannon2[0] = (float)(posX + 40.45d*Math.cos(Math.toRadians(angle+45)));
+        cannon2[1] = (float)(posY + 40.45d*Math.sin(Math.toRadians(angle+45)));
     }
 
     public void move(){
@@ -103,25 +107,25 @@ public class AirShip {
         if(posY>(50*16*1.5f)){
             posY=0;
             sprite.setPosition(posX - cenX, posY-cenY);
-            cannon1[1]=posY+27;
-            cannon2[1]=cannon1[1];
-            Gdx.app.log("RESETY","RESETY RESETY RESETY RESETY RESETY RESETY");
+            angleSet();
+            Gdx.app.log("RESETY", "RESETY RESETY RESETY RESETY RESETY RESETY");
         }
         if(posX>(50*16*1.5f)){
             posX=0;
-            cannon1[0]=posX+32;
-            cannon2[0]=posX-32;
-            sprite.setPosition(posX-cenX,posY-cenY);
+            sprite.setPosition(posX - cenX, posY - cenY);
+            angleSet();
             Gdx.app.log("RESETX","RESETX RESETX RESETX RESETX RESETX RESETX");
         }
         if(posY<0){
             posY=(50*16*1.5f)-cenY;
             sprite.setPosition(posX-cenX,posY);
+            angleSet();
             Gdx.app.log("RESETY","RESETY RESETY RESETY RESETY RESETY RESETY");
         }
         if(posX<0){
             posX=(50*16*1.5f)-cenX;
             sprite.setPosition(posX,posY-cenY);
+            angleSet();
             Gdx.app.log("RESETY","RESETY RESETY RESETY RESETY RESETY RESETY");
         }
     }
@@ -134,11 +138,19 @@ public class AirShip {
 
     public void turnRight(){
         sprite.rotate(-5);
+        cannon1[0] = (float)(posX + 40.45d*Math.cos(Math.toRadians(angle-45-5)));
+        cannon1[1] = (float)(posY + 40.45d*Math.sin(Math.toRadians(angle-45-5)));
+        cannon2[0] = (float)(posX + 40.45d*Math.cos(Math.toRadians(angle+45-5)));
+        cannon2[1] = (float)(posY + 40.45d*Math.sin(Math.toRadians(angle+45-5)));
         angle-=5;
     }
 
     public void turnLeft(){
         sprite.rotate(5);
+        cannon1[0] = (float)(posX + 40.45d*Math.cos(Math.toRadians(angle-45+5)));
+        cannon1[1] = (float)(posY + 40.45d*Math.sin(Math.toRadians(angle-45+5)));
+        cannon2[0] = (float)(posX + 40.45d*Math.cos(Math.toRadians(angle+45+5)));
+        cannon2[1] = (float)(posY + 40.45d*Math.sin(Math.toRadians(angle+45+5)));
         angle+=5;
     }
 
